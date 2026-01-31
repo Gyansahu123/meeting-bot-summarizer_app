@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Meeting Result</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body style="background:#f4f6f9">
+
+<div class="container mt-5">
+    <div class="card shadow p-4">
+        <h3>{{ meeting.title }}</h3>
+        <p><b>Type:</b> {{ meeting.meeting_type }}</p>
+        <p><b>Date:</b> {{ meeting.created_at|date:"d M Y, h:i A" }}</p>
+
+        {% if meeting.google_meet_link %}
+        <a href="{{ meeting.google_meet_link }}" target="_blank"
+           class="btn btn-success mb-3">
+            Join Google Meet 🔗
+        </a>
+        {% else %}
+        <span class="text-muted">No Google Meet link</span>
+        {% endif %}
+
+        <h4>Summary</h4>
+        <p>{{ meeting.ai_output.summary }}</p>
+
+        <h4>Key Points</h4>
+        {% if meeting.ai_output.key_points %}
+            <ul>
+            {% for point in meeting.ai_output.key_points %}
+                <li>{{ point }}</li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No key points available.</p>
+        {% endif %}
+
+        <h4>Decisions</h4>
+        {% if meeting.ai_output.decisions %}
+            <ul>
+            {% for decision in meeting.ai_output.decisions %}
+                <li>{{ decision }}</li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No decisions available.</p>
+        {% endif %}
+
+        <h4>Action Items</h4>
+        {% if meeting.ai_output.action_items %}
+            <ul>
+            {% for item in meeting.ai_output.action_items %}
+                <li>{{ item }}</li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No action items available.</p>
+        {% endif %}
+
+        <h4>Agenda</h4>
+        {% if meeting.ai_output.agenda %}
+            <ul>
+            {% for topic in meeting.ai_output.agenda %}
+                <li>{{ topic }}</li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No agenda available.</p>
+        {% endif %}
+
+        <a href="{% url 'meeting_history' %}" class="btn btn-secondary mt-3">Back</a>
+    </div>
+</div>
+
+</body>
+</html>
