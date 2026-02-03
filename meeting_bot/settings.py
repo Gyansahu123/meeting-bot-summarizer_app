@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-qi-#+lk(07450m_5u^wzofiaq%qa_r*_3%ugs+%-dr4drrti3p
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-ALLOWED_HOSTS = ['*']
+#ALLOWED_HOSTS = ['*']
 # import os#
 import os
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
@@ -130,8 +130,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
-#
+#STATIC_URL = 'static/'
 # URL to use when referring to static files located in STATIC_ROOT.
 STATIC_URL = '/static/'
 
@@ -140,19 +139,18 @@ STATIC_URL = '/static/'
 # The absolute path to the directory where collectstatic will collect static files for deployment.
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
-
+#DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+#MEDIA_URL = '/media/'
+#MEDIA_ROOT = BASE_DIR / 'media'
+#STATIC_URL = '/static/'
+#STATICFILES_DIRS = [BASE_DIR / 'static']
 # Directories where Django will look for additional static files.
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
-# For better performance in production, WhiteNoise can create compressed versions of your files.
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Using CompressedStaticFilesStorage instead of Manifest to prevent 500 errors on missing files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Media files (User-uploaded files)
 MEDIA_URL = '/media/'
@@ -164,3 +162,19 @@ import os
 
 # STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# Default primary key field type
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# LOGGING Configuration to see errors in Render logs
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'WARNING',
+    },
+}
